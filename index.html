@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPG Studio</title>
+    
+    <!-- FullPage.js CSS -->
+    <link rel="stylesheet" href="css/fullpage.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- <style>
+        .package {
+            cursor: pointer;
+        }
+        .package-detail {
+            display: none;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        .package-text {
+            font-size: 1.2em;
+            max-width: 80%;
+            margin-bottom: 40px;
+        }
+        .section-1 .text {
+            position: relative;
+            z-index: 2;
+        }
+        .section-5 .text {
+            font-size: 1.5em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .service-packages {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .service-packages .package-box {
+            width: 30%;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .service-packages .package-box:hover {
+            transform: scale(1.05);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+    </style> -->
+</head>
+<body>
+    <!-- FullPage.js Sections -->
+    <div id="fullpage">
+        <div class="section section-1">
+            <div class="background"></div>
+            <div class="shape"></div>
+            <div class="text">CPG Studio</div>
+        </div>
+        <div class="section section-2">
+            <div class="text">Welcome to CPG Studio, based in Brooklyn. We specialise in crafting bold strategies and creative campaigns for brands and startups that want to make noise, build community, and scale with purpose. Whether it's launching in new markets or igniting cultural relevance, we help brands find their edge and grow with authenticity.</div>
+        </div>
+        <div class="section section-3">
+            <div class="text">CPG Studio is led by the founder of Minor Figures, the globally recognised cult brand that redefined the coffee industry. With deep experience in brand-building, commercial strategy, and creative storytelling, the studio helps ambitious brands scale with purpose and cultural impact. From launching in new markets to building category-defining movements, CPG Studio applies proven expertise to create brands that cut through noise and build lasting relevance.</div>
+        </div>
+        <div class="section section-4">
+            <img src="assets/934FD2DA-ED99-4B6C-91D3-D1F6469952CC.JPG" alt="Minor Figures Graphic" style="display: block; margin: 0 auto; max-width: 80%; padding: 0 10%;">
+        </div>
+        <div class="section section-5" id>
+            <div class="service-offer">Service Offer: Choose from 3 packages below.</div>
+            <div class="service-packages">
+                <div class="package-box" onclick="location.href='#package-startups'">
+                        <h3>Startups</h3>
+                        <p>For startups, it’s all about finding your voice and carving out your space. Together, we’ll build a brand that’s not just a product, but a movement people can rally behind.</p>
+                </div>
+                <div class="package-box" onclick="location.href='#package-scaleups'">
+                        <h3>Scaleups</h3>
+                        <p>Scaling up is about expanding without losing what makes you special. We’ll focus on unlocking your next stage of growth while staying true to your brand’s core.</p>
+                </div>
+                <div class="package-box" onclick="location.href='#package-standouts'">
+                        <h3>Standouts</h3>
+                        <p>For thriving brands, the challenge is to keep pushing boundaries. We’ll refine your strategy, take bold steps, and ensure you remain ahead of the curve.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Package Detail Sections (Separate Pages) -->
+        <div id="package-startups" class="section">
+            <div class="package-text">For startups, it’s all about finding your voice and carving out your space. Together, we’ll build a brand that’s not just a product, but a movement people can rally behind.</div>
+            <button onclick="location.href='#section-5'">Back to Packages</button>
+        </div>
+        <div id="package-scaleups" class="section">
+            <div class="package-text">Scaling up is about expanding without losing what makes you special. We’ll focus on unlocking your next stage of growth while staying true to your brand’s core.</div>
+            <button onclick="location.href='#section-5'">Back to Packages</button>
+        </div>
+        <div id="package-standouts" class="section">
+            <div class="package-text">For thriving brands, the challenge is to keep pushing boundaries. We’ll refine your strategy, take bold steps, and ensure you remain ahead of the curve.</div>
+            <button onclick="location.href='#section-5'">Back to Packages</button>
+        </div>
+        
+        <!-- Newsletter Signup Section -->
+        <div class="section section-6">
+            <div class="text">Join our Newsletter</div>
+            <form>
+                <input type="email" name="email" placeholder="Enter your email" required>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+        
+        <!-- Footer with Inverted Colors -->
+        <div class="section section-7" style="background: black; color: white;">
+            <div class="text">CPG Studio © 2025 - All Rights Reserved.</div>
+        </div>
+    </div>
+    
+    <!-- FullPage.js -->
+    <script src="js/fullpage.js"></script>
+    <!-- Custom Script -->
+    <script src="js/custom.js"></script>
+</body>
+</html>
