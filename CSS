@@ -1,59 +1,209 @@
-/* Reset */
-body, html {
+/* Reset styles */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
   height: 100%;
   overflow: hidden;
   font-family: Arial, sans-serif;
+  cursor: none; /* Hide default cursor */
 }
 
-/* Fullpage Wrapper */
-#fullpage {
+/* Background styles */
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  scroll-snap-type: y mandatory;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
+  height: 100%;
+  z-index: 1;
 }
 
-/* Sections */
+/* Shape styles */
+.shape {
+  position: absolute;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  transition: all 0.1s ease;
+}
+
+/* Text styles */
+.text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  font-weight: bold;
+  z-index: 3;
+  text-align: center;
+  color: white;
+}
+
+/* Adjust text size for Page 2 */
+.section-2 .text {
+  font-size: 36px; /* Adjust as needed */
+  max-width: 80%; /* Keeps text readable on larger screens */
+  text-align: center;
+}
+
+/* Adjust text size for Page 3 */
+.section-3 .text {
+  font-size: 34px; /* Adjust as needed */
+  max-width: 80%;
+  text-align: center;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .section-2 .text, .section-3 .text {
+      font-size: 28px; /* Adjust text size for mobile */
+      max-width: 90%;
+  }
+}
+
+/* Section styles */
 .section {
-  width: 100%;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3rem;
-  scroll-snap-align: start;
+  position: relative;
 }
 
-/* Section Colors */
-.section:nth-child(1) { background: #ff9999; }
-.section:nth-child(2) { background: #99ff99; }
-.section:nth-child(3) { background: #9999ff; }
+/* Fix centering issues */
+.section-1 .background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
 
-/* Navigation Dots */
-#nav-dots {
-  position: fixed;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+  .text {
+      font-size: 32px;
+  }
+
+  .shape {
+      width: 50px;
+      height: 50px;
+  }
+}
+
+.section-5 {
+  text-align: center;
+}
+
+.section-5 .service-offer {
+  font-size: 1.5em;
+  margin-bottom: 50px;
+  font-size: 48px;
+  font-weight: bold;
+  z-index: 3;
+  position: relative;
+}
+.service-packages {
+  display: flex;
+  flex-direction: column; /* Change to column to stack items vertically */
+  align-items: center; /* Center align the items */
+  gap: 20px; /* Keep the gap between items */
+}
+
+.service-packages .package-box:last-child {
+  border-bottom: none; /* Remove the bottom border for the last item */
+}
+
+
+.service-packages {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center align the items */
+  gap: 20px; /* Keep the gap between items */
+}
+
+.service-packages .package-box {
+  width: 80%; /* Adjust width as needed */
+  padding: 20px;
+  text-align: left; /* Align text to the left */
+  border: none; /* Remove the border */
+  border-bottom: 1px solid #ccc; /* Add a bottom border as a divider */
+  border-radius: 0; /* Remove border radius */
+  cursor: pointer;
+  display: flex; /* Use flexbox to align items */
+  justify-content: flex-start; /* Align items to the start */
+  align-items: center; /* Center align the items vertically */
+}
+
+.service-packages .package-box h3 {
+  margin: 0; /* Remove default margin */
+  flex: 0 0 auto; /* Prevent the title from stretching */
+}
+
+.service-packages .package-box p {
+  margin: 0; /* Remove default margin */
+  flex: 1; /* Allow the description to take up remaining space */
+  padding-left: 20px; /* Add some space between the title and description */
+}
+
+/* .service-packages {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.service-packages .package-box {
+  width: 30%;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+} */
+
+/*.service-packages .package-box:hover {
+  transform: scale(1.05);
+}*/
+
+.package-detail {
+  display: none;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
 }
 
-.nav-dot {
-  width: 12px;
-  height: 12px;
-  margin: 10px 0;
-  background: #ccc;
-  border-radius: 50%;
+.package-text {
+  font-size: 1.2em;
+  max-width: 80%;
+  margin-bottom: 40px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1em;
   cursor: pointer;
-  transition: background 0.3s;
 }
 
-.nav-dot.active {
-  background: #333;
+/* Cursor handling */
+.hide-cursor {
+  cursor: none;
+}
+
+/* Smooth color transitions */
+.text, .service-offer, .package-box, button, body {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hide FullPage.js credit */
+.fp-watermark {
+  display: none !important;
 }
