@@ -1,85 +1,122 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const sections = document.querySelectorAll('.section');
-  const fullpage = document.getElementById('fullpage');
-  const navDotsContainer = document.getElementById('nav-dots');
+  console.log("Custom.js loaded!");
 
-  let currentSectionIndex = 0;
-  let isAnimating = false;
-  let touchStartY = 0;
+  // FullPage.js Initialization
+  new fullpage('#fullpage', {
+      autoScrolling: true,
+      navigation: false, // Remove navigation dots
+      credits: { enabled: false }, // Remove FullPage.js credit
+      afterLoad: function (origin, destination, direction) {
+          const backgroundColor = document.querySelector('.background').style.backgroundColor;
+          const shapeColor = document.querySelector('.shape').style.backgroundColor;
 
-  // Create navigation dots
-  sections.forEach((_, index) => {
-    const dot = document.createElement('div');
-    dot.classList.add('nav-dot');
-    if (index === 0) dot.classList.add('active');
-    dot.addEventListener('click', () => scrollToSection(index));
-    navDotsContainer.appendChild(dot);
+          // For all pages except Page 1, set text color to match shape color
+          if (destination.index > 0) {
+              const currentSection = document.querySelectorAll('.section')[destination.index];
+              currentSection.style.backgroundColor = backgroundColor; // Background same as Page 1
+              const textElement = currentSection.querySelector('.text');
+              if (textElement) {
+                  textElement.style.color = shapeColor; // Text matches shape color
+              }
+          }
+      }
   });
 
-  const navDots = document.querySelectorAll('.nav-dot');
+  // Arrays for colors, shapes, and sizes
+  const colors = [
+    { shapeColor: '#9700FA', backgroundColor: '#FF3B00' },
+    { shapeColor: '#3D006F', backgroundColor: '#D3FF61' },
+    { shapeColor: '#3800FF', backgroundColor: '#90FF00' },
+    { shapeColor: '#3900FF', backgroundColor: '#FFBDF2' },
+    { shapeColor: '#8200FF', backgroundColor: '#0CFFFF' },
+    { shapeColor: '#1A1A18', backgroundColor: '#E7E7E7' },
+    { shapeColor: '#005C53', backgroundColor: '#E7E7E7' },
+    { shapeColor: '#3E0051', backgroundColor: '#FF0000' },
+    { shapeColor: '#672400', backgroundColor: '#00FF97' },
+    { shapeColor: '#C5007A', backgroundColor: '#A1EAD8' },
+    { shapeColor: '#CF00DC', backgroundColor: '#AAB74D' },
+    { shapeColor: '#9E7F16', backgroundColor: '#E7E7E7' },
+  ];
+  const shapes = [
+      { borderRadius: '50%' },
+      { borderRadius: '0', clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' },
+      { borderRadius: '0', clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' },
+  ];
+  const sizes = ["30vw", "40vw", "50vw"];
 
-  const scrollToSection = (index) => {
-    if (index < 0 || index >= sections.length || isAnimating) return;
-    isAnimating = true;
-    currentSectionIndex = index;
+  let previousColor = null;
+  let previousShape = null;
+  let previousSize = null;
 
-    sections[index].scrollIntoView({ behavior: 'smooth' });
-    updateActiveDot();
+  const background = document.querySelector('.background');
+  const shape = document.querySelector('.shape');
+  const text = document.querySelector('.text');
 
-    setTimeout(() => {
-      isAnimating = false;
-    }, 900);
-  };
+  // Cursor-follow behavior
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let shapeX = mouseX;
+  let shapeY = mouseY;
+  const cursorSpeed = 0.15;
 
-  const updateActiveDot = () => {
-    navDots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === currentSectionIndex);
-    });
-  };
+  document.addEventListener('mousemove', (event) => {
+      mouseX = event.clientX;
+      mouseY = event.clientY;
+  });
 
-  const handleScroll = (event) => {
-    if (isAnimating) return;
+  function animateShape() {
+      shapeX += (mouseX - shapeX) * cursorSpeed;
+      shapeY += (mouseY - shapeY) * cursorSpeed;
 
-    if (event.deltaY > 0 && currentSectionIndex < sections.length - 1) {
-      scrollToSection(currentSectionIndex + 1);
-    } else if (event.deltaY < 0 && currentSectionIndex > 0) {
-      scrollToSection(currentSectionIndex - 1);
-    }
-  };
+      shape.style.left = `${shapeX}px`;
+      shape.style.top = `${shapeY}px`;
 
-  const handleTouchStart = (event) => {
-    touchStartY = event.touches[0].clientY;
-  };
+      requestAnimationFrame(animateShape);
+  }
 
-  const handleTouchMove = (event) => {
-    if (isAnimating) return;
+  // Cycle logic to avoid repetition
+  function getNextItem(array, previousItem) {
+      const filteredArray = array.filter((item) => item !== previousItem);
+      const randomIndex = Math.floor(Math.random() * filteredArray.length);
+      return filteredArray[randomIndex];
+  }
 
-    const touchEndY = event.touches[0].clientY;
-    const touchDiff = touchStartY - touchEndY;
+  function applyRandomDesign() {
+      const randomColor = getNextItem(colors, previousColor);
+      const randomShape = getNextItem(shapes, previousShape);
+      const randomSize = getNextItem(sizes, previousSize);
 
-    if (touchDiff > 50 && currentSectionIndex < sections.length - 1) {
-      scrollToSection(currentSectionIndex + 1);
-    } else if (touchDiff < -50 && currentSectionIndex > 0) {
-      scrollToSection(currentSectionIndex - 1);
-    }
-  };
+      // Update previous choices
+      previousColor = randomColor;
+      previousShape = randomShape;
+      previousSize = randomSize;
 
-  const handleKeydown = (event) => {
-    if (isAnimating) return;
+      // Apply colors for Page 1
+      background.style.backgroundColor = randomColor.backgroundColor;
+      shape.style.backgroundColor = randomColor.shapeColor;
+      text.style.color = randomColor.backgroundColor; // Text matches background color on Page 1
 
-    if (event.key === 'ArrowDown' || event.key === 'PageDown') {
-      if (currentSectionIndex < sections.length - 1) {
-        scrollToSection(currentSectionIndex + 1);
-      }
-    } else if (event.key === 'ArrowUp' || event.key === 'PageUp') {
-      if (currentSectionIndex > 0) {
-        scrollToSection(currentSectionIndex - 1);
-      }
-    }
-  };
+      // Apply size and shape
+      shape.style.width = randomSize;
+      shape.style.height = randomSize;
+      shape.style.borderRadius = randomShape.borderRadius || '0';
+      shape.style.clipPath = randomShape.clipPath || 'none';
 
-  document.addEventListener('wheel', handleScroll, { passive: false });
-  document.addEventListener('touchstart', handleTouchStart, { passive: false });
-  document.addEventListener('touchmove', handleTouchMove, { passive: false });
-  document.addEventListener('keydown', handleKeydown);
+      // Apply background color to all sections initially
+      const sections = document.querySelectorAll('.section');
+      sections.forEach((section, index) => {
+          section.style.backgroundColor = randomColor.backgroundColor;
+          const textElement = section.querySelector('.text');
+          if (textElement && index > 0) {
+              textElement.style.color = randomColor.shapeColor; // Text matches shape color on Page 2, 3, etc.
+          }
+      });
+  }
+
+  // Add click listener to shuffle designs
+  document.addEventListener('click', applyRandomDesign);
+
+  // Initial setup
+  applyRandomDesign();
+  animateShape();
 });
